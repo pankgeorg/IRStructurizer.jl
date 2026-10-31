@@ -70,4 +70,11 @@ end
     include("julialowering_exceptions.jl")
     include("debuginfo.jl")
     include("regression.jl")
+
+    # captured variables that get boxed (`Core.Box`) lose their type
+    if isdefined(Test, :detect_closure_boxes)
+        @testset "closure boxes" begin
+            @test Test.detect_closure_boxes(IRStructurizer) == []
+        end
+    end
 end
